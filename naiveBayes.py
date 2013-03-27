@@ -21,7 +21,7 @@ def naiveBayes(spam, ham, query):
 	P_article_spam += .001
 	P_article_not_spam += .001
 	P_article = P_article_spam * P_spam + P_article_not_spam * P_not_spam
-	print P_not_spam
+	# print P_not_spam
 	P_spam_article = float(P_article_spam*P_spam)/P_article
 	return P_spam_article
 

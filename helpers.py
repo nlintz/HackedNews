@@ -21,6 +21,11 @@ def getTitles():
 	titles = [anchor.text for anchor in anchors]
 	return titles
 
+def formatQuery(articleName):
+	query = articleName.split(' ')
+	query_lower = [q.lower() for q in query]
+	return query_lower
+
 def main():
 	print getTitles()
 

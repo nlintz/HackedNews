@@ -38,12 +38,15 @@
 				</tr>
 				{% for title,link in titleLinks.items()%}
 				<tr>
-					<td><a href= {{link}} target="_blank"><strong class="title">{{title}}</strong></a></td>
+					<td>
+						<a href= {{link}} target="_blank"><strong class="title">{{title}}</strong></a>
+						<span class="label" data-title="{{ title }}">Success</span>
+					</td>
 					<td>
 						<center>
 							<div class="btn-group">
-								<button class="btn"><i class="icon-thumbs-up"></i></button>
-								<button class="btn"><i class="icon-thumbs-down"></i></button>
+								<button class="btn btn-up" data-title="{{ title }}"><i class="icon-thumbs-up" ></i></button>
+								<button class="btn btn-down" data-title="{{ title }}"><i class="icon-thumbs-down"></i></button>
 							</div>
 						</center>
 					</td>
@@ -64,7 +67,8 @@
 
 		<!-- js -->
 		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-		<script src={{voteHandler}}></script>
+		<script src="static/javascript/vote-handler.js"></script>
+		<script src="static/javascript/color-handler.js"></script>
 		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/js/bootstrap.min.js"></script>
 
 	</body>

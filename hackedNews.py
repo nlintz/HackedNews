@@ -2,12 +2,13 @@ import os.path
 import sys
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
-from Model import Model
 import tornado.ioloop
 import tornado.web
 import scrape
 import naiveBayes
 import helpers
+import json
+import ui_methods
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -19,9 +20,6 @@ settings = {
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-    	PM = PickleMonger('bayesDict.dat')
-    	PM.create('ham')
-    	PM.create('spam')
     	titleLinkAssoc = scrape.scrapeHN()
         self.render("home.html",
         titleLinks = titleLinkAssoc,
@@ -33,8 +31,7 @@ class MainHandler(tornado.web.RequestHandler):
 		args = [self.get_arguments("articleName"),self.get_arguments("voteType")]
 		articleName = args[0][0]
 		voteType = str(args[1][0])
-		query = articleName.split(' ')
-		query_lower = [q.lower() for q in query]
+		query = helpers.formatQuery(articleName)
 		ham = PM.read_allInstances('ham')
 		spam = PM.read_allInstances('spam')
 		if voteType == "up":
@@ -49,19 +46,38 @@ class MainHandler(tornado.web.RequestHandler):
 
 		PM.updateObject(ham)
 		PM.updateObject(spam)
-		print naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query_lower)
 
-    	
+		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query))
+
+class ColorHandler(tornado.web.RequestHandler):
+	def get(self):
+		PM = PickleMonger('bayesDict.dat')
+		ham = PM.read_allInstances('ham').wordCountDict
+		spam = PM.read_allInstances('spam').wordCountDict
+		
+		titleProbDict = {}
+		titles = helpers.getTitles()
+		for title in titles:
+			query = helpers.formatQuery(title)
+			titleProbDict[title] = str(naiveBayes.naiveBayes(spam, ham, query))
+
+		self.write(
+			json.dumps(
+				titleProbDict
+				)
+			)
 
 
 
 handlers = [
     (r"/", MainHandler),
+    (r"/colorHandler", ColorHandler),
 ]
 
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"), 
         static_path=os.path.join(os.path.dirname(__file__), "static"),
+        ui_methods=ui_methods,
 )               
 
 application = tornado.web.Application(handlers, **settings)

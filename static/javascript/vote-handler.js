@@ -1,15 +1,16 @@
 $(document).ready(function() {
 	voteHandler();
+
 });
 
 function voteHandler(){
-	$('.icon-thumbs-up').click(function() {
-	upVotedArticle = $(this).siblings("a").text();
+	$('.btn-up').bind("click", function() {
+	upVotedArticle = $(this).data('title');
   	voteAjax(upVotedArticle, "up");
 	});
 
-	$('.icon-thumbs-down').click(function() {
-	downVotedArticle = $(this).siblings("a").text();
+	$('.btn-down').click(function() {
+	downVotedArticle = $(this).data('title');
   	voteAjax(downVotedArticle, "down");
 	});
 
