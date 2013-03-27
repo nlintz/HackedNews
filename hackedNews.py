@@ -49,10 +49,6 @@ class MainHandler(tornado.web.RequestHandler):
 
 		PM.updateObject(ham)
 		PM.updateObject(spam)
-		# print query_lower
-		print PM.read_allInstances('ham').wordCountDict
-		print PM.read_allInstances('spam').wordCountDict
-
 		print naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query_lower)
 
     	
