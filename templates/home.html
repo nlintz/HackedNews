@@ -38,7 +38,10 @@
 				</tr>
 				{% for title,link in titleLinks.items()%}
 				<tr>
-					<td><a href= {{link}} target="_blank">{{title}}</a> <span class="label" data-title="{{ title }}">Success</span> </td>
+					<td>
+						<a href= {{link}} target="_blank"><strong class="title">{{title}}</strong></a>
+						<span class="label" data-title="{{ title }}">Success</span>
+					</td>
 					<td>
 						<center>
 							<div class="btn-group">
