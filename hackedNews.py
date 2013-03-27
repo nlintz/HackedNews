@@ -8,6 +8,7 @@ import tornado.web
 import scrape
 import naiveBayes
 import helpers
+import json
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -51,12 +52,15 @@ class MainHandler(tornado.web.RequestHandler):
 		PM.updateObject(spam)
 		print naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query_lower)
 
-    	
+class ColorHandler(tornado.web.RequestHandler):
+	def get(self):
+		self.write(json.dumps({'status': 'fail'}))
 
 
 
 handlers = [
     (r"/", MainHandler),
+    (r"/colorHandler", ColorHandler),
 ]
 
 settings = dict(
