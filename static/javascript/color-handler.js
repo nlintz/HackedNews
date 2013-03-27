@@ -8,14 +8,25 @@ function colorHandler(){
 }
 
 function colorAjax(){
-	$.get('/colorHandler', function(data) {
-  		prob = $.parseJSON(data);
+	$.getJSON('/colorHandler', function(data) {
+		// console.log('colorAjax')
+  		prob = data
+  		console.log(prob);
   		colorLabels(prob);
 	});
 }
 
 function colorLabels(prob){
-	$('.label').each(function( index) {
-
+	$('.label').each(function( index ) {
+		title = $(this).data('title');
+		probTitle = prob[title]
+		if (probTitle < .5){
+			$(this).toggleClass("label-info", true)
+			$(this).toggleClass("label-important", false)
+		}
+		else {
+			$(this).toggleClass("label-info", false)
+			$(this).toggleClass("label-important", true)
+		}
 	});
 }

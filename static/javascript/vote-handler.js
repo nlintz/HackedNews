@@ -7,11 +7,13 @@ function voteHandler(){
 	$('.btn-up').bind("click", function() {
 	upVotedArticle = $(this).data('title');
   	voteAjax(upVotedArticle, "up");
+  	colorHandler();
 	});
 
 	$('.btn-down').click(function() {
 	downVotedArticle = $(this).data('title');
   	voteAjax(downVotedArticle, "down");
+  	colorHandler();
 	});
 
 }

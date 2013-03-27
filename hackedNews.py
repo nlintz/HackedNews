@@ -58,8 +58,9 @@ class ColorHandler(tornado.web.RequestHandler):
 		titleProbDict = {}
 		titles = helpers.getTitles()
 		for title in titles:
+			key = ''.join(title.split())
 			query = helpers.formatQuery(title)
-			titleProbDict[title] = str(naiveBayes.naiveBayes(spam, ham, query))
+			titleProbDict[key] = str(naiveBayes.naiveBayes(spam, ham, query))
 
 		self.write(
 			json.dumps(
