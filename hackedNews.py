@@ -9,6 +9,7 @@ import scrape
 import naiveBayes
 import helpers
 import json
+import ui_methods
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -20,9 +21,6 @@ settings = {
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-    	PM = PickleMonger('bayesDict.dat')
-    	PM.create('ham')
-    	PM.create('spam')
     	titleLinkAssoc = scrape.scrapeHN()
         self.render("home.html",
         titleLinks = titleLinkAssoc,
@@ -32,6 +30,7 @@ class MainHandler(tornado.web.RequestHandler):
 		PM = PickleMonger('bayesDict.dat')
 
 		args = [self.get_arguments("articleName"),self.get_arguments("voteType")]
+		print args
 		articleName = args[0][0]
 		voteType = str(args[1][0])
 		query = articleName.split(' ')
@@ -54,7 +53,20 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ColorHandler(tornado.web.RequestHandler):
 	def get(self):
-		self.write(json.dumps({'status': 'fail'}))
+		PM = PickleMonger('bayesDict.dat')
+		ham = PM.read_allInstances('ham')
+		spam = PM.read_allInstances('spam')
+		print ham
+		print spam
+		self.write(
+			json.dumps(
+				{
+				'status': 'fail'
+
+
+				})
+
+			)
 
 
 
@@ -66,6 +78,7 @@ handlers = [
 settings = dict(
         template_path=os.path.join(os.path.dirname(__file__), "templates"), 
         static_path=os.path.join(os.path.dirname(__file__), "static"),
+        ui_methods=ui_methods,
 )               
 
 application = tornado.web.Application(handlers, **settings)
