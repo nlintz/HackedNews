@@ -33,7 +33,9 @@
 			<ul>
 				{% for title,link in titleLinks.items()%}
 				<li>
-					<a href= {{link}}>{{title}}</a><i class="icon-thumbs-up"></i><i class="icon-thumbs-down"></i>
+					<a href= {{link}}>{{title}}</a>
+					<button class="btn"><i class="icon-thumbs-up"></i></button>
+					<button class="btn"><i class="icon-thumbs-down"></i></button>
 				</li>
 				{% end %}
 			</ul>
