@@ -3,4 +3,4 @@
 	url = https://github.com/nlintz/NathanArjunWebFramework.git
 [submodule "PickleMonger"]
 	path = PickleMonger
-	url = https://github.com/nlintz/NathanArjunWebFramework.git
+	url = https://github.com/nlintz/NathanArjunWebFramework
