@@ -48,6 +48,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 		PM.updateObject(ham)
 		PM.updateObject(spam)
+		
+		print naiveBayes.naiveBayes(ham.wordCountDict, spam.wordCountDict, query_lower)
 
 class ColorHandler(tornado.web.RequestHandler):
 	def get(self):
