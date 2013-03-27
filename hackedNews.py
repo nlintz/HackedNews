@@ -1,6 +1,6 @@
 import os.path
 import sys
-sys.path.append( "picklemonger/" )
+sys.path.append( "PickleMonger/" )
 from PickleMonger import PickleMonger
 from Model import Model
 import tornado.ioloop
