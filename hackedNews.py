@@ -2,7 +2,6 @@ import os.path
 import sys
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
-from Model import Model
 import tornado.ioloop
 import tornado.web
 import scrape
@@ -32,8 +31,7 @@ class MainHandler(tornado.web.RequestHandler):
 		args = [self.get_arguments("articleName"),self.get_arguments("voteType")]
 		articleName = args[0][0]
 		voteType = str(args[1][0])
-		query = articleName.split(' ')
-		query_lower = [q.lower() for q in query]
+		query = helpers.formatQuery(articleName)
 		ham = PM.read_allInstances('ham')
 		spam = PM.read_allInstances('spam')
 		if voteType == "up":
@@ -49,23 +47,24 @@ class MainHandler(tornado.web.RequestHandler):
 		PM.updateObject(ham)
 		PM.updateObject(spam)
 
-		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query_lower))
+		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query))
 
 class ColorHandler(tornado.web.RequestHandler):
 	def get(self):
 		PM = PickleMonger('bayesDict.dat')
-		ham = PM.read_allInstances('ham')
-		spam = PM.read_allInstances('spam')
-		print ham
-		print spam
+		ham = PM.read_allInstances('ham').wordCountDict
+		spam = PM.read_allInstances('spam').wordCountDict
+		
+		titleProbDict = {}
+		titles = helpers.getTitles()
+		for title in titles:
+			query = helpers.formatQuery(title)
+			titleProbDict[title] = naiveBayes.naiveBayes(spam, ham, query)
+
 		self.write(
 			json.dumps(
-				{
-				'status': 'fail'
-
-
-				})
-
+				titleProbDict
+				)
 			)
 
 
