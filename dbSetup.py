@@ -9,7 +9,7 @@ def dbSetup():
    	PM.create('ham')
    	PM.create('spam')
    	ham = Model('ham',{"the":1})
-   	spam = Model('ham',{"the":1})
+   	spam = Model('spam',{"the":1})
    	PM.updateObject(ham)
    	PM.updateObject(spam)
 

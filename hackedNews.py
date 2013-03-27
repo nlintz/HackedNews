@@ -30,7 +30,6 @@ class MainHandler(tornado.web.RequestHandler):
 		PM = PickleMonger('bayesDict.dat')
 
 		args = [self.get_arguments("articleName"),self.get_arguments("voteType")]
-		print args
 		articleName = args[0][0]
 		voteType = str(args[1][0])
 		query = articleName.split(' ')
@@ -49,7 +48,6 @@ class MainHandler(tornado.web.RequestHandler):
 
 		PM.updateObject(ham)
 		PM.updateObject(spam)
-		print naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query_lower)
 
 class ColorHandler(tornado.web.RequestHandler):
 	def get(self):
