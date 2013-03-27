@@ -1,0 +1,3 @@
+[submodule "NathanArjunWebFramework"]
+	path = NathanArjunWebFramework
+	url = https://github.com/nlintz/NathanArjunWebFramework.git
