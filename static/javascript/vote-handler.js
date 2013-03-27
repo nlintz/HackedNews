@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	voteHandler();
-	voteAjax("bull shit is going down", "down");
 });
 
 function voteHandler(){

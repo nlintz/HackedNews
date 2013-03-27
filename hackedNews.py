@@ -1,7 +1,7 @@
 import os.path
 import sys
-sys.path.append( "PickleMonger/" )
-from PickleMonger import PickleMonger
+sys.path.append( "PickleMonger" )
+from PickleMonger.PickleMonger import PickleMonger
 from Model import Model
 import tornado.ioloop
 import tornado.web
