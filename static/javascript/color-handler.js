@@ -9,6 +9,7 @@ function colorHandler(){
 
 function colorAjax(){
 	$.get('/colorHandler', function(data) {
-  		alert(data);
+  		prob = $.parseJSON(data)
+  		console.log(prob)
 	});
 }
