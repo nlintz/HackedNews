@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 function voteHandler(){
-	$('.btn-up').click(function() {
+	$('.btn-up').bind("click", function() {
 	upVotedArticle = $(this).data('title');
   	voteAjax(upVotedArticle, "up");
 	});
