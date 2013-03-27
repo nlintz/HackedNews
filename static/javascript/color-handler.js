@@ -9,7 +9,13 @@ function colorHandler(){
 
 function colorAjax(){
 	$.get('/colorHandler', function(data) {
-  		prob = $.parseJSON(data)
-  		console.log(prob)
+  		prob = $.parseJSON(data);
+  		colorLabels(prob);
+	});
+}
+
+function colorLabels(prob){
+	$('.label').each(function( index) {
+
 	});
 }
