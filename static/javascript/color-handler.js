@@ -8,11 +8,11 @@ function colorHandler(){
 }
 
 function colorAjax(){
-	$.getJSON('/colorHandler', function(data) {
-		// console.log('colorAjax')
+	$.getJSON('/posterior', function(data) {
   		prob = data
   		console.log(prob);
   		colorLabels(prob);
+  		assignPercents(prob);
 	});
 }
 
