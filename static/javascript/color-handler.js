@@ -21,12 +21,14 @@ function colorLabels(prob){
 		title = $(this).data('title');
 		probTitle = prob[title]
 		if (probTitle < .5){
-			$(this).toggleClass("label-info", true)
-			$(this).toggleClass("label-important", false)
+			$(this).toggleClass("label-info", true);
+			$(this).toggleClass("label-important", false);
+			$(this).text('Ham');
 		}
 		else {
-			$(this).toggleClass("label-info", false)
-			$(this).toggleClass("label-important", true)
+			$(this).toggleClass("label-info", false);
+			$(this).toggleClass("label-important", true);
+			$(this).text('Spam');
 		}
 	});
 }
