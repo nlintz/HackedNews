@@ -51,7 +51,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query))
 
-class ColorHandler(tornado.web.RequestHandler):
+class PosteriorHandler(tornado.web.RequestHandler):
 	def get(self):
 		PM = PickleMonger('bayesDict.dat')
 		ham = PM.read_allInstances('ham').wordCountDict
@@ -74,7 +74,7 @@ class ColorHandler(tornado.web.RequestHandler):
 
 handlers = [
     (r"/", MainHandler),
-    (r"/colorHandler", ColorHandler),
+    (r"/posterior", PosteriorHandler),
 ]
 
 settings = dict(
