@@ -1,1 +1,1 @@
-web: python hackedNews.py --port=8888
+web: python hackedNews.py --port=5000
