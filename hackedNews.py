@@ -1,5 +1,6 @@
 import os.path
 import sys
+import dbConfig
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
 import tornado.ioloop
@@ -20,6 +21,7 @@ settings = {
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+    	dbConfig.dbSetup()
     	titleLinkAssoc = scrape.scrapeHN()
         self.render("home.html",
         titleLinks = titleLinkAssoc,
