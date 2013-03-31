@@ -20,18 +20,6 @@
           <!-- nav content -->
           <div class="nav-collapse collapse">
             <ul class="nav">
-            	<li class="active">
-            		<a href="#">
-            			<i class="icon-home icon-white"></i>
-            			Home
-            		</a>
-            	</li>
-            	<li>
-            		<a href="spamFilter.html">
-            			<i class="icon-filter"></i>
-            			Spam Filter
-            		</a>
-            	</li>
             </ul> 
           </div>
         </div>
@@ -45,7 +33,6 @@
         <tr>
           <th><center>Title</center></th>
           <th><center>Vote</center></th>
-          <th><center>Spam?</center></th>
         </tr>
         {% for title,link in titleLinks.items()%}
         <tr>
@@ -60,8 +47,6 @@
                 <button class="btn btn-down" data-title="{{ title }}"><i class="icon-thumbs-down"></i></button>
               </div>
             </center>
-          </td>
-          <td>
           </td>
         </tr>
         {% end %}
