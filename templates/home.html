@@ -1,5 +1,19 @@
 {% extends "layout.html" %}
-  {% block nav %} {% include "nav.html"%} {% end %}
+  {% block nav %} 
+    <li class="active">
+      <a href="#">
+        <i class="icon-home icon-white"></i>
+        Home
+      </a>
+    </li>
+    <li>
+      <a href="spamFilter.html">
+        <i class="icon-filter"></i>
+        Spam Filter
+      </a>
+    </li>
+    <!-- {% include "nav.html"%} -->
+  {% end %}
   {% block content %}
       <!-- content -->
       <h1>Hacked News</h1>
