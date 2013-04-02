@@ -1,5 +1,7 @@
+import os
 import os.path
 import sys
+import pymongo
 import dbConfig
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
@@ -18,9 +20,13 @@ settings = {
     "xsrf_cookies": True,
 }
 
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+    	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	db_name = "bayesDict"
+    	connection = pymongo.Connection(mongo_url)
+
+
     	dbConfig.dbSetup()
     	titleLinkAssoc = scrape.scrapeHN()
         self.render("home.html",
