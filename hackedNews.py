@@ -23,9 +23,11 @@ settings = {
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
     	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	print os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
     	db_name = "bayesDict"
     	connection = pymongo.Connection(mongo_url)
-
+    	ham = connection.Ham
+    	test = connection.Spam
 
     	dbConfig.dbSetup()
     	titleLinkAssoc = scrape.scrapeHN()
@@ -57,6 +59,25 @@ class MainHandler(tornado.web.RequestHandler):
 
 		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query))
 
+class Ham(tornado.web.RequestHandler):
+	def get(self):
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		connection = pymongo.Connection(mongo_url)
+		ham = connection.Ham
+
+	def post(self):
+		title = self.get_arguments("title")
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		connection = pymongo.Connection(mongo_url)
+		ham = connection.Ham
+		query = helpers.formatQuery(title)
+		for word in query:
+			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
+		
+		# ham.update({user_id:1}, {$set:{text:"Lorem ipsum", updated:new Date()}, $inc:{count:1}}, true, false)
+
 class PosteriorHandler(tornado.web.RequestHandler):
 	def get(self):
 		PM = PickleMonger('bayesDict.dat')
@@ -81,6 +102,7 @@ class PosteriorHandler(tornado.web.RequestHandler):
 handlers = [
     (r"/", MainHandler),
     (r"/posterior", PosteriorHandler),
+    (r"/Ham", Ham),
 ]
 
 settings = dict(
