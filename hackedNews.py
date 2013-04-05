@@ -65,6 +65,14 @@ class Ham(tornado.web.RequestHandler):
 		db_name = "bayesDict"
 		connection = pymongo.Connection(mongo_url)
 		ham = connection.Ham
+		response = {}
+		for el in list(ham.find()):
+			response[el["word"]] = el["count"]
+		self.write(
+			json.dumps(
+				response
+				)
+			)
 
 	def post(self):
 		title = self.get_arguments("title")
