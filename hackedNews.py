@@ -86,6 +86,10 @@ class Ham(tornado.web.RequestHandler):
 		
 		# ham.update({user_id:1}, {$set:{text:"Lorem ipsum", updated:new Date()}, $inc:{count:1}}, true, false)
 
+class Filter(tornado.web.RequestHandler):
+	def get(self):
+		self.render("spam.html")
+
 class PosteriorHandler(tornado.web.RequestHandler):
 	def get(self):
 		PM = PickleMonger('bayesDict.dat')
@@ -111,6 +115,7 @@ handlers = [
     (r"/", MainHandler),
     (r"/posterior", PosteriorHandler),
     (r"/Ham", Ham),
+    (r"/filter", Filter),
 ]
 
 settings = dict(
