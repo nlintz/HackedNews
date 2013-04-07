@@ -1,7 +1,7 @@
 import os
 import os.path
 import sys
-import pymongo
+from pymongo import MongoClient
 import dbConfig
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
@@ -22,12 +22,12 @@ settings = {
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-    	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-    	print os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-    	db_name = "bayesDict"
-    	connection = pymongo.Connection(mongo_url)
-    	ham = connection.Ham
-    	test = connection.Spam
+    	# mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	# print os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	# db_name = "bayesDict"
+    	# connection = pymongo.Connection(mongo_url)
+    	# ham = connection.Ham
+    	# test = connection.Spam
 
     	dbConfig.dbSetup()
     	titleLinkAssoc = scrape.scrapeHN()
@@ -63,8 +63,9 @@ class Ham(tornado.web.RequestHandler):
 	def get(self):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		db_name = "bayesDict"
-		connection = pymongo.Connection(mongo_url)
-		ham = connection.Ham
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		ham = db.Ham
 		response = {}
 		for el in list(ham.find()):
 			response[el["word"]] = el["count"]
@@ -78,8 +79,9 @@ class Ham(tornado.web.RequestHandler):
 		title = self.get_arguments("title")
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		db_name = "bayesDict"
-		connection = pymongo.Connection(mongo_url)
-		ham = connection.Ham
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		ham = db.Ham
 		query = helpers.formatQuery(title)
 		for word in query:
 			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
@@ -88,7 +90,7 @@ class Ham(tornado.web.RequestHandler):
 
 class Filter(tornado.web.RequestHandler):
 	def get(self):
-		self.render("spam.html")
+		self.rnder("spam.html")
 
 class PosteriorHandler(tornado.web.RequestHandler):
 	def get(self):
