@@ -8,7 +8,7 @@ function colorHandler(){
 }
 
 function colorAjax(){
-	$.getJSON('/posterior', function(data) {
+	$.getJSON('/Ham', function(data) {
   		prob = data
   		console.log(prob);
   		colorLabels(prob);

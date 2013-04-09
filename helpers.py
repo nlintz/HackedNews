@@ -1,4 +1,5 @@
 from pyquery import PyQuery as pq
+from pymongo import MongoClient
 
 def histogram(lst):
 	hist = {}
@@ -28,6 +29,7 @@ def formatQuery(articleName):
 
 def main():
 	print getTitles()
+
 
 if __name__ == "__main__":
 	main()

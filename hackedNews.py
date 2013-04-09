@@ -1,5 +1,7 @@
+import os
 import os.path
 import sys
+from pymongo import MongoClient
 import dbConfig
 sys.path.append( "PickleMonger" )
 from PickleMonger.PickleMonger import PickleMonger
@@ -18,9 +20,15 @@ settings = {
     "xsrf_cookies": True,
 }
 
-
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+    	# mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	# print os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+    	# db_name = "bayesDict"
+    	# connection = pymongo.Connection(mongo_url)
+    	# ham = connection.Ham
+    	# test = connection.Spam
+
     	dbConfig.dbSetup()
     	titleLinkAssoc = scrape.scrapeHN()
         self.render("home.html",
@@ -51,6 +59,39 @@ class MainHandler(tornado.web.RequestHandler):
 
 		print "spam liklihood: " + str(naiveBayes.naiveBayes(spam.wordCountDict, ham.wordCountDict, query))
 
+class Ham(tornado.web.RequestHandler):
+	def get(self):
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		ham = db.Ham
+		response = {}
+		for el in list(ham.find()):
+			response[el["word"]] = el["count"]
+		self.write(
+			json.dumps(
+				response
+				)
+			)
+
+	def post(self):
+		title = self.get_arguments("title")
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		ham = db.Ham
+		query = helpers.formatQuery(title)
+		for word in query:
+			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
+		
+		# ham.update({user_id:1}, {$set:{text:"Lorem ipsum", updated:new Date()}, $inc:{count:1}}, true, false)
+
+class Filter(tornado.web.RequestHandler):
+	def get(self):
+		self.rnder("spam.html")
+
 class PosteriorHandler(tornado.web.RequestHandler):
 	def get(self):
 		PM = PickleMonger('bayesDict.dat')
@@ -75,6 +116,8 @@ class PosteriorHandler(tornado.web.RequestHandler):
 handlers = [
     (r"/", MainHandler),
     (r"/posterior", PosteriorHandler),
+    (r"/Ham", Ham),
+    (r"/filter", Filter),
 ]
 
 settings = dict(
