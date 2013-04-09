@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+  {% block nav %} 
+    <li>
+      <a href="/">
+        <i class="icon-home"></i>
+        Home
+      </a>
+    </li>
+    <li>
+      <a href="#">
+        <i class="icon-filter icon-white"></i>
+        Spam Filter
+      </a>
+    </li>
+  {% end %}
+
+  {% block content %}
+    <!-- content -->
+    <h1>Hacked News</h1>
+    <table class="table table-striped table-bordered">
+      <tr>
+        <th><center>Title</center></th>
+        <th><center>Vote</center></th>
+        <th><center>Spam?</center></th>
+      </tr>
+      {% for title,link in titleLinks.items()%}
+      <tr>
+        <td>
+          <a href= {{link}} target="_blank"><strong class="title">{{title}}</strong></a>
+          <span class="label" data-title="{{ stripTitle(title) }}">Success</span>
+        </td>
+        <td>
+          <center>
+            <div class="btn-group">
+              <button class="btn btn-up" data-title="{{ title }}"><i class="icon-thumbs-up" ></i></button>
+              <button class="btn btn-down" data-title="{{ title }}"><i class="icon-thumbs-down"></i></button>
+            </div>
+          </center>
+        </td>
+        <td class="likelihood-spam" data-title="{{ stripTitle(title) }}">
+        </td>
+      </tr>
+      {% end %}
+    </table>
+  {% end %}
