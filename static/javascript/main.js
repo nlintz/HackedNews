@@ -1,4 +1,5 @@
-require(["jquery", "jquery.vote-handler"], function($, voteHandler) {
-    //the jquery.alpha.js and jquery.beta.js plugins have been loaded.
+require(["jquery", "jquery.vote-handler", "jquery.color-handler"], function($, voteHandler, colorHandler) {
     $().voteHandler();
+    $().colorHandler();
+    // alert($().bayes());
 });
