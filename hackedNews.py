@@ -77,7 +77,6 @@ class Ham(tornado.web.RequestHandler):
 
 	def post(self):
 		title = self.get_argument("title")
-		print title
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		db_name = "bayesDict"
 		client = MongoClient(mongo_url)
@@ -87,7 +86,33 @@ class Ham(tornado.web.RequestHandler):
 		for word in query:
 			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
 		
-		# ham.update({user_id:1}, {$set:{text:"Lorem ipsum", updated:new Date()}, $inc:{count:1}}, true, false)
+class Spam(tornado.web.RequestHandler):
+	def get(self):
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		spam = db.Spam
+		response = {}
+		for el in list(spam.find()):
+			response[el["word"]] = el["count"]
+		self.write(
+			json.dumps(
+				response
+				)
+			)
+
+	def post(self):
+		title = self.get_argument("title")
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		db_name = "bayesDict"
+		client = MongoClient(mongo_url)
+		db = client.db_name
+		spam = db.Spam
+		query = helpers.formatQuery(title)
+		for word in query:
+			spam.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
+		
 
 class Filter(tornado.web.RequestHandler):
 	def get(self):
@@ -117,7 +142,8 @@ class PosteriorHandler(tornado.web.RequestHandler):
 handlers = [
     (r"/", MainHandler),
     (r"/posterior", PosteriorHandler),
-    (r"/Ham", Ham),
+    (r"/ham", Ham),
+    (r"/spam", Spam),
     (r"/filter", Filter),
 ]
 

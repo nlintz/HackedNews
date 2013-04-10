@@ -13,10 +13,10 @@ $.fn.voteHandler = function() {
 
 	function voteAjax(articleName, voteType){
 		if(voteType=="up"){
-			$.post("/Ham", { title: articleName } );
+			$.post("/ham", { title: articleName } );
 		}
 		if(voteType=="down"){
-			alert('downvote')
+			$.post("/spam", { title: articleName } );
 		}
 	
 	}
