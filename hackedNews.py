@@ -76,7 +76,8 @@ class Ham(tornado.web.RequestHandler):
 			)
 
 	def post(self):
-		title = self.get_arguments("title")
+		title = self.get_argument("title")
+		print title
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		db_name = "bayesDict"
 		client = MongoClient(mongo_url)
