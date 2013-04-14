@@ -33,12 +33,12 @@ define(["jquery","percents","bayes"], function($, percents,bayes) {
 			title = title.toLowerCase();
 			splitTitle = title.split(" ");
 			var probTitle = bayes.bayes(splitTitle, ham, spam);
-			if (probTitle < .3){
+			if (probTitle < .5){
 				$(this).toggleClass("label-info", true);
 				$(this).toggleClass("label-important", false);
 				$(this).text('Ham');
 				}
-			else if (probTitle > .7){
+			else if (probTitle > .5){
 				$(this).toggleClass("label-info", false);
 				$(this).toggleClass("label-important", true);
 				$(this).text('Spam');

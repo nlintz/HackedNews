@@ -6,6 +6,9 @@ def scrapeHN():
 	anchors = hn("td.title > a")
 	titleLinkAssoc = {}
 	for anchor in anchors:
+		if anchor.text == "More":
+			print "contiuned"
+			continue
 		titleLinkAssoc[anchor.text] = anchor.attrib['href']
 
 	links = [anchor.attrib['href'] for anchor in anchors]
