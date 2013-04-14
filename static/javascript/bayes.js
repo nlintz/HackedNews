@@ -15,12 +15,15 @@ define([], function() {
 		P_title_ham = 1;
 		for (index in titleArray){
 			var word = titleArray[index];
-			var spamProb = spam[word] || 1;
-			var hamProb	= ham[word] || 1; 
+			var spamProb = spam[word] || 0;
+			var hamProb	= ham[word] || 0; 
 			P_title_spam *= (spamProb/spamSize)
 			P_title_ham *= (hamProb/hamSize)
 		}
 		var P_spam_title = (P_title_spam * P_spam)/(P_title_spam * P_spam + P_title_ham * P_ham);
+		if(isNaN(P_spam_title)){
+			return .5;
+		}
 		return P_spam_title
 	}
 	return{
