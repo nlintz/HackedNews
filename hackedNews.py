@@ -30,10 +30,11 @@ class Ham(tornado.web.RequestHandler):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
+		print "db_name"+db_name
 		username = parsed.username
 		password = parsed.password
 		client = MongoClient(mongo_url)
-		db = client.app14400075
+		db = client.heroku_app14400075
 		# db.authenticate(username, password)
 		ham = db.Ham
 		response = {}
@@ -53,7 +54,7 @@ class Ham(tornado.web.RequestHandler):
 		username = parsed.username
 		password = parsed.password
 		client = MongoClient(mongo_url)
-		db = client.app14400075
+		db = client.heroku_app14400075
 		# db.authenticate(username, password)
 		ham = db.Ham
 		query = helpers.formatQuery(title)
@@ -68,7 +69,7 @@ class Spam(tornado.web.RequestHandler):
 		username = parsed.username
 		password = parsed.password
 		client = MongoClient(mongo_url)
-		db = client.app14400075
+		db = client.heroku_app14400075
 		# db.authenticate(username, password)
 		spam = db.Spam
 		response = {}
@@ -88,7 +89,7 @@ class Spam(tornado.web.RequestHandler):
 		username = parsed.username
 		password = parsed.password
 		client = MongoClient(mongo_url)
-		db = client.app14400075
+		db = client.heroku_app14400075
 		# db.authenticate(username, password)
 		spam = db.Spam
 		query = helpers.formatQuery(title)
