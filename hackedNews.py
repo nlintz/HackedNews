@@ -45,7 +45,8 @@ class Ham(tornado.web.RequestHandler):
 	def post(self):
 		title = self.get_argument("title")
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-		db_name = "bayesDict"
+		parsed = urlsplit(mongo_url)
+		db_name = parsed.path[1:]
 		client = MongoClient(mongo_url)
 		db = client.db_name
 		ham = db.Ham
@@ -56,7 +57,8 @@ class Ham(tornado.web.RequestHandler):
 class Spam(tornado.web.RequestHandler):
 	def get(self):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-		db_name = "bayesDict"
+		parsed = urlsplit(mongo_url)
+		db_name = parsed.path[1:]
 		client = MongoClient(mongo_url)
 		db = client.db_name
 		spam = db.Spam
@@ -72,7 +74,8 @@ class Spam(tornado.web.RequestHandler):
 	def post(self):
 		title = self.get_argument("title")
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-		db_name = "bayesDict"
+		parsed = urlsplit(mongo_url)
+		db_name = parsed.path[1:]
 		client = MongoClient(mongo_url)
 		db = client.db_name
 		spam = db.Spam
