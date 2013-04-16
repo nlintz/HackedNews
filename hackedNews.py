@@ -30,8 +30,11 @@ class Ham(tornado.web.RequestHandler):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
+		username = parsed.username
+		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.db_name
+		# db.authenticate(username, password)
 		ham = db.Ham
 		response = {}
 		for el in list(ham.find()):
@@ -47,8 +50,11 @@ class Ham(tornado.web.RequestHandler):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
+		username = parsed.username
+		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.db_name
+		# db.authenticate(username, password)
 		ham = db.Ham
 		query = helpers.formatQuery(title)
 		for word in query:
@@ -59,8 +65,11 @@ class Spam(tornado.web.RequestHandler):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
+		username = parsed.username
+		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.db_name
+		# db.authenticate(username, password)
 		spam = db.Spam
 		response = {}
 		for el in list(spam.find()):
@@ -76,8 +85,11 @@ class Spam(tornado.web.RequestHandler):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
+		username = parsed.username
+		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.db_name
+		# db.authenticate(username, password)
 		spam = db.Spam
 		query = helpers.formatQuery(title)
 		for word in query:
