@@ -1,12 +1,10 @@
 import os
 import os.path
 from urlparse import urlsplit
-import sys
 from pymongo import MongoClient
 import tornado.ioloop
 import tornado.web
 import scrape
-import naiveBayes
 import helpers
 import json
 import ui_methods
@@ -18,13 +16,14 @@ settings = {
     "xsrf_cookies": True,
 }
 
+
 class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-    	titleLinkAssoc = scrape.scrapeHN()
-        self.render("home.html",
-        titleLinks = titleLinkAssoc
-        )
-    
+	def get(self):
+		titleLinkAssoc = scrape.scrapeHN()
+		self.render("home.html",
+		titleLinks = titleLinkAssoc
+		)
+	
 class Ham(tornado.web.RequestHandler):
 	def get(self):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
@@ -35,7 +34,6 @@ class Ham(tornado.web.RequestHandler):
 		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
-		# db.authenticate(username, password)
 		ham = db.Ham
 		response = {}
 		for el in list(ham.find()):
@@ -55,7 +53,6 @@ class Ham(tornado.web.RequestHandler):
 		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
-		# db.authenticate(username, password)
 		ham = db.Ham
 		query = helpers.formatQuery(title)
 		for word in query:
@@ -70,7 +67,6 @@ class Spam(tornado.web.RequestHandler):
 		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
-		# db.authenticate(username, password)
 		spam = db.Spam
 		response = {}
 		for el in list(spam.find()):
@@ -90,7 +86,6 @@ class Spam(tornado.web.RequestHandler):
 		password = parsed.password
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
-		# db.authenticate(username, password)
 		spam = db.Spam
 		query = helpers.formatQuery(title)
 		for word in query:
