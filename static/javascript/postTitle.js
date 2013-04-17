@@ -4,10 +4,10 @@ define(["jquery","voteAjax"], function($,voteAjax) {
 			title = $(this).data('title');
 			voteAjax.voteAjax(title, "up");
 			voteAjax.voteAjax(title, "down");
-		})
+		});
 	}
 	return {
 		postAllTitles:postAllTitles
-	}
+	};
 
-})
+});

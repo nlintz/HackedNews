@@ -3,9 +3,8 @@ from pymongo import MongoClient
 
 def wipeDB():
 	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-	db_name = "bayesDict"
 	client = MongoClient(mongo_url)
-	db = client.db_name
+	db = client.heroku_app14400075
 	ham = db.Ham
 	spam = db.Spam
 	ham.remove()
@@ -13,17 +12,15 @@ def wipeDB():
 
 def wipeHam():
 	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-	db_name = "bayesDict"
 	client = MongoClient(mongo_url)
-	db = client.db_name
+	db = client.heroku_app14400075
 	ham = db.Spam
 	ham.remove()
 
 def wipeSpam():
 	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
-	db_name = "bayesDict"
 	client = MongoClient(mongo_url)
-	db = client.db_name
+	db = client.heroku_app14400075
 	spam = db.Spam
 	spam.remove()
 

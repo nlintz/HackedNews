@@ -7,7 +7,6 @@ def scrapeHN():
 	titleLinkAssoc = {}
 	for anchor in anchors:
 		if anchor.text == "More":
-			print "contiuned"
 			continue
 		titleLinkAssoc[anchor.text] = anchor.attrib['href']
 
