@@ -73,9 +73,13 @@ class Ham(tornado.web.RequestHandler):
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
 		ham = db.Ham
+		hamTitles = db.hamTitles
 		response = {}
 		for el in list(ham.find()):
 			response[el["word"]] = el["count"]
+		for count in list(hamTitles.find()):
+			response["titleCount"] = count['count']
+		
 		self.write(
 			json.dumps(
 				response
@@ -92,9 +96,11 @@ class Ham(tornado.web.RequestHandler):
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
 		ham = db.Ham
+		hamTitles = db.hamTitles
 		query = helpers.formatQuery(title)
 		for word in query:
 			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
+		hamTitles.update({"titleCount":"count"}, {"$inc": {"count":1} }, upsert=True)
 		
 class Spam(tornado.web.RequestHandler):
 	def get(self):
@@ -106,9 +112,12 @@ class Spam(tornado.web.RequestHandler):
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
 		spam = db.Spam
+		spamTitles = db.SpamTitles
 		response = {}
 		for el in list(spam.find()):
 			response[el["word"]] = el["count"]
+		for count in list(spamTitles.find()):
+			response["titleCount"] = count['count']
 		self.write(
 			json.dumps(
 				response
@@ -125,9 +134,11 @@ class Spam(tornado.web.RequestHandler):
 		client = MongoClient(mongo_url)
 		db = client.heroku_app14400075
 		spam = db.Spam
+		spamTitles = db.SpamTitles
 		query = helpers.formatQuery(title)
 		for word in query:
-			spam.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
+			spam.update({"word":word, "title":title}, {"$inc": {"count":1} }, upsert=True)
+		spamTitles.update({"titleCount":"count"}, {"$inc": {"count":1} }, upsert=True)
 		
 
 class Filter(tornado.web.RequestHandler):

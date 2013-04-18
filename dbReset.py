@@ -6,9 +6,13 @@ def wipeDB():
 	client = MongoClient(mongo_url)
 	db = client.heroku_app14400075
 	ham = db.Ham
+	hamTitles = db.hamTitles
 	spam = db.Spam
+	spamTitles = db.SpamTitles
 	ham.remove()
+	hamTitles.remove()
 	spam.remove()
+	spamTitles.remove()
 
 def wipeHam():
 	mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
