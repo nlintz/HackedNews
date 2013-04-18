@@ -36,17 +36,17 @@ define(["jquery","percents","bayes"], function($, percents,bayes) {
 			if (probTitle < .5){
 				$(this).toggleClass("label-info", true);
 				$(this).toggleClass("label-important", false);
-				$(this).text('Ham');
+				$(this).text('Ham').fadeIn();
 				}
 			else if (probTitle > .5){
 				$(this).toggleClass("label-info", false);
 				$(this).toggleClass("label-important", true);
-				$(this).text('Spam');
+				$(this).text('Spam').fadeIn();
 				}
 			else{
 				$(this).toggleClass("label-info", false);
 				$(this).toggleClass("label-important", false);
-				$(this).text('Unsure');
+				$(this).text('Unsure').fadeIn();
 			}
 		})
 		percents.assignPercents(ham, spam)

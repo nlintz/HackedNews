@@ -21,7 +21,6 @@ define([], function() {
 			P_title_ham *= (hamProb/hamSize)
 		}
 		var P_spam_title = (P_title_spam * P_spam)/(P_title_spam * P_spam + P_title_ham * P_ham);
-		console.log(P_spam_title)
 		if(isNaN(P_spam_title)){
 			return .5;
 		}

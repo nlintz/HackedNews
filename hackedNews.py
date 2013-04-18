@@ -57,7 +57,7 @@ class SlashDot(tornado.web.RequestHandler):
 
 class Digg(tornado.web.RequestHandler):
 	def get(self):
-		titleLinkAssoc = scrape.scrape('http://www.metafilter.com/', 'div.posttitle > a')
+		titleLinkAssoc = scrape.scrape('http://www.digg.com/', 'h2.story-title > a')
 		self.render("scraped.html",
 		titleLinks = titleLinkAssoc,
 		site = "Digg"
