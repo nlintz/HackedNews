@@ -36,8 +36,6 @@ define([], function() {
 		spamCount = 0; 
 		hamTitleCount = ham['titleCount'];//total number of articles
 		spamTitleCount = spam['titleCount'];//total number of articles
-		console.log(hamTitleCount)
-		console.log(ham)
 		for (key in ham){
 			hamSize += ham[key];
 			hamCount += 1;
