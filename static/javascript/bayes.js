@@ -37,12 +37,12 @@ define([], function() {
 		hamTitleCount = ham['titleCount'];//total number of articles
 		spamTitleCount = spam['titleCount'];//total number of articles
 		for (key in ham){
-			hamSize += ham[key];
-			hamCount += 1;
+			hamSize += key == 'titleCount' ? 0 : ham[key];
+			hamCount += key == 'titleCount' ? 0 : 1;
 		}
 		for (key in spam){
-			spamSize += spam[key];
-			spamCount += 1;
+			spamSize += key == 'titleCount' ? 0 : spam[key];
+			spamCount += key == 'titleCount' ? 0 : 1;
 		}
 		P_spam = (spamTitleCount+k)/(spamTitleCount + hamTitleCount + k*2);
 		P_ham = (hamTitleCount+k)/(spamTitleCount + hamTitleCount + k*2); //k*2 classes (spam, ham)
