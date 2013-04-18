@@ -23,6 +23,45 @@ class MainHandler(tornado.web.RequestHandler):
 		self.render("home.html",
 		titleLinks = titleLinkAssoc
 		)
+
+class RedditHandler(tornado.web.RequestHandler):
+	def get(self):
+		titleLinkAssoc = scrape.scrapeReddit()
+		self.render("reddit.html",
+		titleLinks = titleLinkAssoc
+		)
+
+class TechCrunch(tornado.web.RequestHandler):
+	def get(self):
+		titleLinkAssoc = scrape.scrape('http://www.techcrunch.com/', 'h2.headline > a')
+		self.render("scraped.html",
+		titleLinks = titleLinkAssoc,
+		site = "Tech Crunch"
+		)
+
+class Metafilter(tornado.web.RequestHandler):
+	def get(self):
+		titleLinkAssoc = scrape.scrape('http://www.metafilter.com/', 'div.posttitle > a')
+		self.render("scraped.html",
+		titleLinks = titleLinkAssoc,
+		site = "MetaFilter"
+		)
+
+class SlashDot(tornado.web.RequestHandler):
+	def get(self):
+		titleLinkAssoc = scrape.scrape('http://www.slashdot.org/', 'h2 > span > a')
+		self.render("scraped.html",
+		titleLinks = titleLinkAssoc,
+		site = "Slash Dot"
+		)
+
+class Digg(tornado.web.RequestHandler):
+	def get(self):
+		titleLinkAssoc = scrape.scrape('http://www.metafilter.com/', 'div.posttitle > a')
+		self.render("scraped.html",
+		titleLinks = titleLinkAssoc,
+		site = "Digg"
+		)
 	
 class Ham(tornado.web.RequestHandler):
 	def get(self):
@@ -101,6 +140,11 @@ handlers = [
     (r"/ham", Ham),
     (r"/spam", Spam),
     (r"/filter", Filter),
+    (r"/reddit", RedditHandler),
+    (r"/techcrunch", TechCrunch),
+    (r"/metafilter", Metafilter),
+    (r"/slashdot", SlashDot),
+    (r"/digg", Digg),
 ]
 
 settings = dict(
