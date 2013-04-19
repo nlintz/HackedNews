@@ -50,7 +50,8 @@ def scrape(url, hook):
 
 	
 def main():
-	print scrape('http://www.digg.com/', 'h2.headline > a')
+	# print scrape('http://www.digg.com/', 'h2.headline > a')
+	print scrapeReddit()
 
 if __name__ == "__main__":
 	main()

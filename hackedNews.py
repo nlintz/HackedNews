@@ -42,8 +42,11 @@ class TechCrunch(tornado.web.RequestHandler):
 class Metafilter(tornado.web.RequestHandler):
 	def get(self):
 		titleLinkAssoc = scrape.scrape('http://www.metafilter.com/', 'div.posttitle > a')
+		formattedLinks = ['http://www.metafilter.com'+ v for k,v in titleLinkAssoc.items()] #metafilter hosts their own content so you need to add http://www.metafilter to each link
+		titles = [k for k,v in titleLinkAssoc.items()]
+		formattedLinkAssoc = dict(zip(titles, formattedLinks))
 		self.render("scraped.html",
-		titleLinks = titleLinkAssoc,
+		titleLinks = formattedLinkAssoc,
 		site = "MetaFilter"
 		)
 
