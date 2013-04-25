@@ -1,7 +1,7 @@
 from pyquery import PyQuery as pq
 from helpers import *
 
-def scrapeHN():
+def scrapeHN(): #scrapes hacker news for their articles and urls to said articles
 	hn = pq(url='http://news.ycombinator.com/')
 	anchors = hn("td.title > a")
 	titleLinkAssoc = {}
@@ -16,7 +16,7 @@ def scrapeHN():
 
 	return titleLinkAssoc
 
-def scrapeReddit():
+def scrapeReddit(): #same as above for reddit
 	reddit = pq(url='http://www.reddit.com/')
 	anchors = reddit("p.title > a")
 	titleLinkAssoc = {}
@@ -30,7 +30,7 @@ def scrapeReddit():
 	titles = [anchor.text for anchor in anchors]
 	return titleLinkAssoc
 
-def scrape(url, hook):
+def scrape(url, hook): #same as above but modularized for any website
 	"""
 	url = website url
 	hook = parent selector of link

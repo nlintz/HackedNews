@@ -1,6 +1,8 @@
 from pyquery import PyQuery as pq
 from helpers import *
-
+"""
+WE USED TO DO BAYES CALCULATIONS ON THE SERVER, NOW ITS ALL DONE CLIENT SIDE IN bayes.js
+"""
 def naiveBayes(spam, ham, query):
 	"""
 	spam = dict of spam words

@@ -1,3 +1,4 @@
+//Bayesian computation, first without laplacian smoothing, second with laplacian smoothing
 define([], function() {
 	function bayes(titleArray, ham, spam){
 		hamSize = 0;
@@ -8,11 +9,12 @@ define([], function() {
 		for (key in spam){
 			spamSize += spam[key];
 		}
-		P_spam = spamSize/(spamSize + hamSize);
-		P_ham = hamSize/(spamSize + hamSize)
+		P_spam = spamSize/(spamSize + hamSize); //The probability that an article is spam is the total amount of spam/dictionary size
+		P_ham = hamSize/(spamSize + hamSize) //Above logic is the same
 
 		P_title_spam = 1;
 		P_title_ham = 1;
+		//Compute the conditionally independent likelihood of an article being ham or spam by mulitplying the frequency of each word  in the dict 
 		for (index in titleArray){
 			var word = titleArray[index];
 			var spamProb = spam[word] || 0;
@@ -28,7 +30,7 @@ define([], function() {
 	}
 
 	function laplacianBayes(titleArray, ham, spam){
-		k = 1;
+		k = 1; //laplacian coefficient = 1
 		hamSize = 0; //total number of word occurences
 		hamCount = 0; //total number of unique words
 		spamSize = 0; 
@@ -43,7 +45,7 @@ define([], function() {
 			spamSize += key == 'titleCount' ? 0 : spam[key];
 			spamCount += key == 'titleCount' ? 0 : 1;
 		}
-		P_spam = (spamTitleCount+k)/(spamTitleCount + hamTitleCount + k*2);
+		P_spam = (spamTitleCount+k)/(spamTitleCount + hamTitleCount + k*2); // probability of spam is the total amount of spam articles/total number of articles
 		P_ham = (hamTitleCount+k)/(spamTitleCount + hamTitleCount + k*2); //k*2 classes (spam, ham)
 
 		P_title_spam = 1;

@@ -1,4 +1,5 @@
 define(["jquery","voteAjax"], function($,voteAjax) {
+	// test script written to populate the db
 	function postAllTitles(){
 		$('.label').each(function( index ) {
 			title = $(this).data('title');

@@ -1,4 +1,5 @@
 define(["jquery", "bayes"], function($, bayes) {
+	// gets all percents from the database and puts it into the right column
 	function assignPercents(ham, spam){
 		$('.likelihood-spam').each(function( index ) {
 			title = $(this).data('title');

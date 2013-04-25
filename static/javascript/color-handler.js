@@ -1,4 +1,5 @@
 define(["jquery","percents","bayes"], function($, percents,bayes) {
+	//Top level functions make requests for the ham and spam dictionaries
 	function getHam(){
 		$.ajax({
         url: '/ham',
@@ -33,6 +34,7 @@ define(["jquery","percents","bayes"], function($, percents,bayes) {
 			title = title.toLowerCase();
 			splitTitle = title.split(" ");
 			var probTitle = bayes.bayes(splitTitle, ham, spam);
+			//If likelihodd is > 50%, its spam, otherwise its kosher...
 			if (probTitle < .5){
 				$(this).toggleClass("label-info", true);
 				$(this).toggleClass("label-important", false);

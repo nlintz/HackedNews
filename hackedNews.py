@@ -17,20 +17,23 @@ settings = {
 }
 
 
-class MainHandler(tornado.web.RequestHandler):
+class MainHandler(tornado.web.RequestHandler): #handler for hackernews
 	def get(self):
 		titleLinkAssoc = scrape.scrapeHN()
 		self.render("home.html",
 		titleLinks = titleLinkAssoc
 		)
 
-class RedditHandler(tornado.web.RequestHandler):
+class RedditHandler(tornado.web.RequestHandler): #handler for reddit
 	def get(self):
 		titleLinkAssoc = scrape.scrapeReddit()
 		self.render("reddit.html",
 		titleLinks = titleLinkAssoc
 		)
 
+		"""
+		API changes slightly to accomadate more sites
+		"""
 class TechCrunch(tornado.web.RequestHandler):
 	def get(self):
 		titleLinkAssoc = scrape.scrape('http://www.techcrunch.com/', 'h2.headline > a')
@@ -68,7 +71,7 @@ class Digg(tornado.web.RequestHandler):
 	
 class Ham(tornado.web.RequestHandler):
 	def get(self):
-		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')
+		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017') #connect to DB
 		parsed = urlsplit(mongo_url)
 		db_name = parsed.path[1:]
 		username = parsed.username
@@ -78,7 +81,7 @@ class Ham(tornado.web.RequestHandler):
 		ham = db.Ham
 		hamTitles = db.hamTitles
 		response = {}
-		for el in list(ham.find()):
+		for el in list(ham.find()): #pull the ham histogram and send it as a json response
 			response[el["word"]] = el["count"]
 		for count in list(hamTitles.find()):
 			response["titleCount"] = count['count']
@@ -101,10 +104,13 @@ class Ham(tornado.web.RequestHandler):
 		ham = db.Ham
 		hamTitles = db.hamTitles
 		query = helpers.formatQuery(title)
-		for word in query:
+		for word in query: #add new words to ham histogram, increment the count as well
 			ham.update({"word":word}, {"$inc": {"count":1} }, upsert=True)
 		hamTitles.update({"titleCount":"count"}, {"$inc": {"count":1} }, upsert=True)
 		
+		"""
+		Next class is the same as HAM but for the spam histogram
+		"""
 class Spam(tornado.web.RequestHandler):
 	def get(self):
 		mongo_url = os.getenv('MONGOLAB_URI', 'mongodb://localhost:27017')

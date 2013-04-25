@@ -2,6 +2,7 @@ require(["jquery", "jquery.vote-handler", "color-handler", "postTitle"], functio
 	// postTitle.postAllTitles();
     $().voteHandler(); //Binds vote buttons to ajax calls
     colorHandler.colorLabels(); //Sets up colors when pages loads
+    //binding the color handlers to click buttons
     $('.btn-up').bind("click", function() {
 		colorHandler.colorLabels();
 	});

@@ -1,4 +1,5 @@
 $.fn.voteHandler = function() {
+	//Jquery addon implementation of rthe voteAjax. Used if the user doesn't want to implement the require js api
 	var voteHandler = function(){
 
 	$('a').bind("click", function() {
